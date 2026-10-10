@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#152c41">
+<meta name="description" content="Shri Sai Chit Funds — electronic payment receipt editor and PDF maker.">
+<title>Receipt Editor | Shri Sai Chit Funds</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#192e3f;background:#f1f4f7;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,textarea,select{font:inherit}button{cursor:pointer}.topbar{min-height:84px;background:#152c41;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(18px,3vw,48px);gap:18px;box-shadow:0 5px 24px #132b3f14}.identity{display:flex;align-items:center;gap:13px;min-width:0}.identity-mark{width:48px;height:48px;border:1.5px solid #c9ac75;border-radius:14px;display:grid;place-items:center;color:#e8ca89;font-family:Georgia,serif;font-weight:bold;font-size:18px;flex:none}.identity h1{font-size:16px;letter-spacing:.055em;margin:0 0 3px;font-weight:800}.identity p{margin:0;font-size:12px;color:#cad9e2}.top-actions{display:flex;align-items:center;gap:9px}.btn{min-height:40px;border-radius:9px;padding:10px 15px;border:1px solid #d2dde5;background:#fff;color:#18334a;font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}.btn.primary{background:#b38a47;border-color:#b38a47;color:white}.btn.primary:hover{background:#9a773f}.btn.ghost{background:transparent;border-color:#587081;color:white}.btn.secondary{background:#fff;color:#18334a}.btn.danger{color:#b33136;border-color:#f1c8cb}.btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #63c5d2;outline-offset:2px}.layout{max-width:1530px;margin:auto;padding:27px clamp(14px,2.6vw,40px) 72px;display:grid;grid-template-columns:minmax(320px,470px) minmax(0,1fr);gap:26px;align-items:start}.panel,.preview-shell{background:white;border:1px solid #dbe3e9;border-radius:14px;box-shadow:0 6px 24px #1530490a;overflow:hidden}.panel-title,.preview-title{padding:19px 21px 15px;border-bottom:1px solid #e6eaee;display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-title h2,.preview-title h2{font-size:18px;margin:0}.panel-title p,.preview-title p{font-size:12px;color:#64788a;margin:5px 0 0}.pill{border:1px solid #e9d5ae;background:#fbf6ec;color:#8f6830;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:800;white-space:nowrap}.pill.ready{border-color:#b5dfd1;color:#186b55;background:#e9f7f1}.editor-body{padding:1px 21px 21px}.section{border:0;margin:18px 0 0;padding:0 0 17px;border-bottom:1px solid #e9edef}.section:last-child{border:0;padding-bottom:0}.section legend{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:#3a7e88;padding:0 0 13px}.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700;color:#4e6274}.field input,.field textarea,.field select{width:100%;border-radius:8px;border:1px solid #d0dbe3;background:#fafcfd;padding:10px 11px;min-height:40px;color:#172e3e;font-size:13px}.field textarea{resize:vertical;min-height:62px}.help{font-size:11px;color:#7a8b99;line-height:1.5}.notice{padding:13px 15px;background:#fff8ea;border:1px solid #f2e0b9;border-radius:9px;color:#776037;font-size:12px;line-height:1.55;margin:18px 0 0}.verify{display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.5;color:#314a5c;margin:18px 0}.verify input{width:18px;height:18px;accent-color:#246e6c;margin-top:1px;flex:none}.editor-foot{display:flex;gap:10px;flex-wrap:wrap}.preview-shell{background:#e6ecf0}.preview-title{background:white}.stage{padding:24px;display:flex;justify-content:center;overflow:auto}.paper{width:100%;max-width:800px;min-height:1040px;padding:0;background:white;box-shadow:0 8px 35px #152b4024;color:#192c3e;display:flex;flex-direction:column;font-family:Arial,sans-serif}.paper-head{background:#152c41;color:white;padding:34px 39px 30px;border-bottom:5px solid #c7a66e}.paper-kicker{color:#d8bc85;font-size:10px;text-transform:uppercase;letter-spacing:.16em;font-weight:700;margin-bottom:14px}.brand-line{display:flex;align-items:center;gap:17px}.crest{width:66px;height:66px;border:1.5px solid #c7a66e;border-radius:50%;display:grid;place-items:center;font:700 19px Georgia,serif;color:#e1c589;flex:none}.brand-title{font-size:22px;letter-spacing:.05em;line-height:1.15;font-weight:800}.tag{font-size:12px;color:#dae5eb;margin-top:7px}.contact-line{font-size:11px;line-height:1.7;color:#cbdbe5;margin-top:20px;padding-top:16px;border-top:1px solid #51697b}.doc-title{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:28px 39px 18px}.doc-title h2{font-size:18px;text-transform:uppercase;letter-spacing:.075em;margin:0}.doc-status{border-radius:4px;background:#fff1d4;color:#85591b;font-size:10px;font-weight:800;padding:7px 10px;text-transform:uppercase}.doc-status.confirmed{background:#e0f2ed;color:#126c54}.paper-body{padding:0 39px 32px;flex:1}.receipt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 23px;padding:21px 0;border-top:1px solid #e1e7eb;border-bottom:1px solid #e1e7eb}.datum label,.summary-label,.fine-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#718493;display:block;margin-bottom:7px}.datum strong{font-size:13px;font-weight:600;word-break:break-word;white-space:pre-wrap}.section-heading{font-size:11px;letter-spacing:.085em;color:#26777d;text-transform:uppercase;font-weight:800;margin:25px 0 13px}.amount-cards{display:grid;grid-template-columns:1fr 1fr;gap:11px}.amount-card{border:1px solid #dbe5e9;background:#f7fafb;padding:17px;border-radius:8px}.amount-card.highlight{border-color:#c5d9d3;background:#f1f8f6}.big-money{font-size:24px;font-weight:800;letter-spacing:-.03em;overflow-wrap:anywhere}.payment-table{border:1px solid #dce5eb;border-radius:7px;overflow:hidden}.payment-table-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.payment-table-row >div{padding:12px;border-bottom:1px solid #e1e8ec;border-right:1px solid #e1e8ec;min-width:0;overflow-wrap:anywhere}.payment-table-row>div:nth-child(4n){border-right:0}.payment-table-row:last-child>div{border-bottom:0}.value{font-size:12px;font-weight:700;line-height:1.3}.words{border-radius:7px;padding:16px;background:#f7fafb;border:1px solid #dce5eb;min-height:64px;font-size:13px;line-height:1.55;font-weight:600}.memo{font-size:12px;line-height:1.55;white-space:pre-wrap;color:#4b5d6b}.signature-row{display:flex;justify-content:space-between;gap:30px;margin-top:75px}.sig{border-top:1px solid #a5b4bf;min-width:42%;padding-top:9px;color:#6e8090;font-size:11px}.paper-foot{border-top:1px solid #e2e8ec;padding:16px 39px 22px;display:flex;justify-content:space-between;gap:12px;font-size:10px;color:#768795;line-height:1.45}.bottom-help{padding:13px 20px 19px;text-align:center;color:#63798b;font-size:12px;line-height:1.5}.empty{color:#a5b0b9;font-weight:400!important}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:10;border-radius:9px;color:white;background:#173e4e;padding:12px 17px;box-shadow:0 7px 20px #1c344633;font-size:13px;opacity:0;pointer-events:none;transition:opacity .18s}.toast.show{opacity:1}@media(max-width:990px){.layout{grid-template-columns:1fr}.stage{padding:15px}.paper{max-width:770px}.preview-shell{order:2}}@media(max-width:600px){.topbar{align-items:flex-start;flex-direction:column}.top-actions{width:100%}.top-actions .btn{flex:1}.top-actions .ghost{flex:.75}.layout{padding:15px 10px 50px;gap:14px}.panel-title,.preview-title{padding:16px}.editor-body{padding:0 15px 20px}.field-grid{gap:10px}.stage{padding:10px}.paper{min-height:780px}.paper-head{padding:24px 19px 18px}.crest{height:48px;width:48px;font-size:13px}.brand-title{font-size:15px}.tag{font-size:10px}.contact-line{font-size:9px}.doc-title{padding:21px 19px 12px}.doc-title h2{font-size:14px}.paper-body{padding:0 19px 24px}.receipt-grid{gap:12px}.datum strong{font-size:11px}.datum label,.fine-label,.summary-label{font-size:9px}.amount-card{padding:12px}.big-money{font-size:18px}.payment-table-row>div{padding:8px}.value{font-size:10px}.signature-row{margin-top:65px}.paper-foot{padding:14px 19px;font-size:9px}}@media print{@page{size:A4;margin:0}html,body{margin:0;padding:0;background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.topbar,.panel,.preview-title,.bottom-help,.toast{display:none!important}.layout{display:block;margin:0;padding:0;max-width:none}.preview-shell{border:0;box-shadow:none;border-radius:0}.stage{padding:0;display:block;overflow:visible}.paper{width:210mm!important;max-width:none!important;min-height:297mm!important;box-shadow:none!important;break-after:avoid}.paper-head{padding:12mm 13mm 9mm}.doc-title{padding:9mm 13mm 6mm}.paper-body{padding:0 13mm 8mm}.paper-foot{padding:5mm 13mm 7mm}.signature-row{margin-top:22mm}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="identity"><div class="identity-mark">SSC</div><div><h1>SHRI SAI CHIT FUNDS</h1><p>Receipt studio · Edit, preview &amp; save PDF</p></div></div>
+  <div class="top-actions"><button class="btn ghost" id="newReceipt" type="button">New receipt</button><button class="btn primary" id="downloadPdf" type="button">↓ Save as PDF</button></div>
+</header>
+<main class="layout">
+  <section class="panel" aria-label="Receipt editor">
+    <div class="panel-title"><div><h2>Receipt details</h2><p>Changes appear instantly in the preview.</p></div><span class="pill" id="statePill">DRAFT</span></div>
+    <div class="editor-body">
+      <div class="notice"><strong>From handwritten sample:</strong> Bid amount ₹2,00,000 and amount paid ₹3,00,000 are prefilled for reference. Verify both amounts before issuing a receipt.</div>
+      <fieldset class="section"><legend>Receipt & member</legend><div class="field-grid">
+        <div class="field"><label for="receiptNo">Receipt number</label><input id="receiptNo" data-field="receiptNo" placeholder="e.g. SSC-001"></div>
+        <div class="field"><label for="receiptDate">Receipt date</label><input id="receiptDate" data-field="receiptDate" type="date"></div>
+        <div class="field full"><label for="memberName">Member name</label><input id="memberName" data-field="memberName" placeholder="Member's full name" autocomplete="off"></div>
+        <div class="field"><label for="group">Group</label><input id="group" data-field="group" placeholder="Group name / number"></div>
+        <div class="field"><label for="mobile">Mobile number</label><input id="mobile" data-field="mobile" inputmode="tel" placeholder="Mobile number"></div>
+        <div class="field"><label for="bcNo">BC number</label><input id="bcNo" data-field="bcNo" placeholder="BC number"></div>
+        <div class="field"><label for="memberNo">Member no. (M.N.)</label><input id="memberNo" data-field="memberNo" placeholder="Member number"></div>
+        <div class="field"><label for="serialNo">Serial number</label><input id="serialNo" data-field="serialNo" placeholder="Sl. no."></div>
+      </div></fieldset>
+      <fieldset class="section"><legend>Payment summary</legend><div class="field-grid">
+        <div class="field"><label for="finalBid">Final bid amount (₹)</label><input id="finalBid" data-field="finalBid" inputmode="decimal" placeholder="0.00"></div>
+        <div class="field"><label for="totalPaid">Total amount paid (₹)</label><input id="totalPaid" data-field="totalPaid" inputmode="decimal" placeholder="0.00"></div>
+        <div class="field"><label for="paymentMode">Payment mode</label><select id="paymentMode" data-field="paymentMode"><option value="">Select mode</option><option>Cash</option><option>UPI</option><option>Bank transfer</option><option>Cheque</option><option>Other</option></select></div>
+        <div class="field"><label for="paymentDate">Payment date</label><input id="paymentDate" data-field="paymentDate" type="date"></div>
+        <div class="field full"><label for="amountWords">Amount in words (optional)</label><input id="amountWords" data-field="amountWords" placeholder="Auto-generated from amount paid if blank"><span class="help">Leave blank to automatically convert the payment amount to words.</span></div>
+      </div></fieldset>
+      <fieldset class="section"><legend>Chit / bidding details</legend><div class="field-grid">
+        <div class="field"><label for="monthlyInstallment">M.I. (₹)</label><input id="monthlyInstallment" data-field="monthlyInstallment" inputmode="decimal"></div>
+        <div class="field"><label for="biddingAmount">Bidding amount (₹)</label><input id="biddingAmount" data-field="biddingAmount" inputmode="decimal"></div>
+        <div class="field"><label for="biddingNo">Bidding number</label><input id="biddingNo" data-field="biddingNo"></div>
+        <div class="field"><label for="bcGoneFor">BC gone for (₹)</label><input id="bcGoneFor" data-field="bcGoneFor" inputmode="decimal"></div>
+        <div class="field"><label for="balance">Balance amount (₹)</label><input id="balance" data-field="balance" inputmode="decimal"></div>
+        <div class="field full"><label for="notes">Notes / particulars</label><textarea id="notes" data-field="notes" rows="2" placeholder="Optional transaction details"></textarea></div>
+      </div></fieldset>
+      <fieldset class="section"><legend>Business information</legend><div class="field-grid">
+        <div class="field full"><label for="business">Business name</label><input id="business" data-field="business"></div>
+        <div class="field full"><label for="address">Business address</label><textarea id="address" data-field="address" rows="3"></textarea></div>
+        <div class="field full"><label for="tagline">Tagline</label><input id="tagline" data-field="tagline"></div>
+      </div></fieldset>
+      <label class="verify"><input type="checkbox" id="verified"><span><strong>Details checked and ready to issue.</strong> Remove the "Draft / Unverified" label only after reviewing all amounts and member details. Signature is still required.</span></label>
+      <div class="editor-foot"><button class="btn primary" id="downloadPdfBottom" type="button">↓ Save PDF</button><button class="btn secondary" id="printReceipt" type="button">Print / Save PDF</button><button class="btn danger" id="clearReceipt" type="button">Clear details</button></div>
+      <p class="help" style="margin-top:15px">Drafts are saved automatically in this browser's local storage—not uploaded or synced. Use Save PDF to preserve a permanent copy.</p>
+    </div>
+  </section>
+  <section class="preview-shell" aria-label="Live receipt preview">
+    <div class="preview-title"><div><h2>Live preview</h2><p>A4 layout · Ready for printing or PDF</p></div><span class="pill" id="previewPill">Not verified</span></div>
+    <div class="stage">
+      <article class="paper" id="receipt">
+        <header class="paper-head"><div class="paper-kicker">Payment acknowledgment</div>
+          <div class="brand-line"><div class="crest">SSC</div><div><div class="brand-title" data-bind="business"></div><div class="tag" data-bind="tagline"></div></div></div>
+          <div class="contact-line" data-bind="address"></div>
+        </header>
+        <div class="doc-title"><h2>Payment Receipt</h2><span class="doc-status" id="documentStatus">Draft / Unverified</span></div>
+        <div class="paper-body">
+          <div class="receipt-grid">
+            <div class="datum"><label>Receipt number</label><strong data-bind="receiptNo"></strong></div>
+            <div class="datum"><label>Date</label><strong data-date="receiptDate"></strong></div>
+            <div class="datum"><label>Member name</label><strong data-bind="memberName"></strong></div>
+            <div class="datum"><label>Group</label><strong data-bind="group"></strong></div>
+            <div class="datum"><label>Mobile number</label><strong data-bind="mobile"></strong></div>
+            <div class="datum"><label>BC number</label><strong data-bind="bcNo"></strong></div>
+            <div class="datum"><label>Member number</label><strong data-bind="memberNo"></strong></div>
+            <div class="datum"><label>Serial number</label><strong data-bind="serialNo"></strong></div>
+          </div>
+          <div class="section-heading">Payment summary</div>
+          <div class="amount-cards">
+            <div class="amount-card"><span class="summary-label">Final bid amount</span><div class="big-money" data-money="finalBid"></div></div>
+            <div class="amount-card highlight"><span class="summary-label">Total amount paid</span><div class="big-money" data-money="totalPaid"></div></div>
+          </div>
+          <div class="section-heading">Chit &amp; transaction details</div>
+          <div class="payment-table">
+            <div class="payment-table-row">
+              <div><span class="fine-label">M.I.</span><span class="value" data-money="monthlyInstallment"></span></div>
+              <div><span class="fine-label">Bidding amount</span><span class="value" data-money="biddingAmount"></span></div>
+              <div><span class="fine-label">Bidding no.</span><span class="value" data-bind="biddingNo"></span></div>
+              <div><span class="fine-label">BC gone for</span><span class="value" data-money="bcGoneFor"></span></div>
+            </div>
+            <div class="payment-table-row">
+              <div><span class="fine-label">Balance</span><span class="value" data-money="balance"></span></div>
+              <div><span class="fine-label">Payment mode</span><span class="value" data-bind="paymentMode"></span></div>
+              <div><span class="fine-label">Payment date</span><span class="value" data-date="paymentDate"></span></div>
+              <div><span class="fine-label">Amount status</span><span class="value" id="amountStatus">Verify amounts</span></div>
+            </div>
+          </div>
+          <div class="section-heading">Amount in words</div><div class="words" id="previewWords"></div>
+          <div id="previewNotesWrap"><div class="section-heading">Particulars / Notes</div><div class="memo" id="previewNotes"></div></div>
+          <div class="signature-row"><div class="sig">Member / Candidate Signature</div><div class="sig">Organizer Signature</div></div>
+        </div>
+        <footer class="paper-foot"><span>Electronic receipt prepared for Shri Sai Chit Funds.</span><span>Valid upon verification and authorization.</span></footer>
+      </article>
+    </div>
+    <div class="bottom-help">Save PDF downloads a PDF on your device. Print / Save PDF opens your browser's print dialog as a backup.</div>
+  </section>
+</main>
+<div class="toast" role="status" aria-live="polite" id="toast"></div>
+<script>
+(function(){
+  "use strict";
+  var KEY="ssc-receipt-editor-v1";
+  var base={business:"SHRI SAI CHIT FUNDS",tagline:"Together We Grow · Safe · Trusted · Financial Support",address:"Ward No. 10, Melligeri Complex, Beside Vishal Mart,\nBagalkot – 587101\nTaluk: Bagalkot | District: Bagalkot",receiptNo:"",receiptDate:"",memberName:"",group:"",mobile:"",bcNo:"",memberNo:"",serialNo:"1",finalBid:"200000",totalPaid:"300000",paymentMode:"",paymentDate:"",amountWords:"",monthlyInstallment:"",biddingAmount:"",biddingNo:"",bcGoneFor:"",balance:"",notes:"",verified:false};
+  var data=Object.assign({},base);
+  try{var saved=JSON.parse(localStorage.getItem(KEY)||"null");if(saved && typeof saved==="object"){Object.keys(base).forEach(function(k){if(typeof saved[k]===typeof base[k])data[k]=saved[k]})}}catch(e){}
+  var fields=Array.from(document.querySelectorAll("[data-field]"));
+  function el(id){return document.getElementById(id)}
+  function safe(k){return String(data[k]||"").trim()}
+  function showDate(val){if(!val)return "—";var s=String(val).split("-");return s.length===3?s[2]+"/"+s[1]+"/"+s[0]:val}
+  function formatted(val){var n=Number(String(val||"").replace(/,/g,""));return String(val||"").trim() && Number.isFinite(n)?"₹"+n.toLocaleString("en-IN",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2}):"—"}
+  function numWordsUnder1000(n){var a=["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"],b=["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];var out=[];if(n>=100){out.push(a[Math.floor(n/100)]+" Hundred");n%=100}if(n>=20){out.push(b[Math.floor(n/10)]+(n%10?" "+a[n%10]:""))}else if(n>0){out.push(a[n])}return out.join(" ")}
+  function wordsAmount(raw){if(!String(raw).trim())return "";var num=Number(String(raw).replace(/,/g,""));if(!Number.isFinite(num)||num<0||num>999999999)return "";var rup=Math.floor(num),paise=Math.round((num-rup)*100);if(paise===100){rup++;paise=0}var groups=[[10000000,"Crore"],[100000,"Lakh"],[1000,"Thousand"],[1,""]],out=[];groups.forEach(function(g){var v=Math.floor(rup/g[0]);if(v){out.push(numWordsUnder1000(v)+(g[1]?" "+g[1]:""));rup%=g[0]}});var res=(out.join(" ")||"Zero")+" Rupees";if(paise)res+=" and "+numWordsUnder1000(paise)+" Paise";return res+" Only"}
+  function currentWords(){return safe("amountWords")||wordsAmount(data.totalPaid)||"—"}
+  function fillInputs(){fields.forEach(function(node){node.value=data[node.dataset.field]||""});el("verified").checked=data.verified}
+  function setText(node,txt){node.textContent=txt||"—";node.classList.toggle("empty",!txt)}
+  function render(){
+    document.querySelectorAll("[data-bind]").forEach(function(node){setText(node,safe(node.dataset.bind))});
+    document.querySelectorAll("[data-date]").forEach(function(node){setText(node,showDate(data[node.dataset.date]))});
+    document.querySelectorAll("[data-money]").forEach(function(node){setText(node,formatted(data[node.dataset.money]))});
+    setText(el("previewWords"),currentWords()==="—"?"":currentWords());
+    el("previewNotesWrap").hidden=!safe("notes");
+    el("previewNotes").textContent=safe("notes");
+    el("documentStatus").textContent=data.verified?"Verified by preparer":"Draft / Unverified";
+    el("documentStatus").classList.toggle("confirmed",data.verified);
+    el("amountStatus").textContent=data.verified?"Checked":"Verify amounts";
+    el("statePill").textContent=data.verified?"CHECKED":"DRAFT";
+    el("statePill").classList.toggle("ready",data.verified);
+    el("previewPill").textContent=data.verified?"Details checked":"Not verified";
+    el("previewPill").classList.toggle("ready",data.verified);
+  }
+  var toastTimer;function notify(txt){var n=el("toast");n.textContent=txt;n.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){n.classList.remove("show")},2600)}
+  function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){notify("Local saving unavailable; please download your PDF.")}}
+  fields.forEach(function(node){node.addEventListener("input",function(){data[node.dataset.field]=node.value;if(data.verified){data.verified=false;el("verified").checked=false}saveLocal();render()});node.addEventListener("change",function(){data[node.dataset.field]=node.value;if(data.verified){data.verified=false;el("verified").checked=false}saveLocal();render()})});
+  el("verified").addEventListener("change",function(){data.verified=this.checked;saveLocal();render()});
+  function cleanReset(){var business=data.business,address=data.address,tagline=data.tagline;data=Object.assign({},base,{business:business,address:address,tagline:tagline,finalBid:"",totalPaid:""});fillInputs();saveLocal();render();notify("New blank receipt ready")}
+  el("newReceipt").addEventListener("click",function(){if(confirm("Create a new receipt? Download your existing receipt first; the local draft will be replaced."))cleanReset()});
+  el("clearReceipt").addEventListener("click",function(){if(confirm("Clear the current receipt details? This cannot be undone."))cleanReset()});
+  el("printReceipt").addEventListener("click",function(){window.print()});
+  function makePdf(){
+    if(!window.jspdf || !window.jspdf.jsPDF){notify("Opening Print — choose Save as PDF");window.print();return}
+    try{
+      var pdf=new window.jspdf.jsPDF({orientation:"portrait",unit:"mm",format:"a4"}),W=210,left=15,right=195,y=0,navy=[21,44,65],teal=[35,111,115],muted=[100,121,137],border=[219,230,235];
+      function ink(rgb){pdf.setTextColor(rgb[0],rgb[1],rgb[2])}
+      function write(s,x,yy,size,opt,color){ink(color||navy);pdf.setFont("helvetica",opt&&opt.bold?"bold":"normal");pdf.setFontSize(size);pdf.text(String(s||"—"),x,yy,opt&&opt.align?{align:opt.align}:undefined)}
+      function line(ypos){pdf.setDrawColor.apply(pdf,border);pdf.setLineWidth(.35);pdf.line(left,ypos,right,ypos)}
+      function wrap(t,x,yy,w,sz,color){pdf.setFont("helvetica","normal");pdf.setFontSize(sz);ink(color||navy);var lines=pdf.splitTextToSize(String(t||"—").replace(/₹/g,"INR ").replace(/[–—]/g,"-"),w);pdf.text(lines,x,yy);return yy+lines.length*(sz*.42)+1}
+      function item(lbl,val,x,yy,w){write(lbl.toUpperCase(),x,yy,8,{bold:true},muted);return wrap(val||"—",x,yy+7,w,10,navy)}
+      function moneyText(raw){var s=formatted(raw);return s==="—"?"—":s.replace("₹","INR ")}
+      pdf.setFillColor.apply(pdf,navy);pdf.rect(0,0,W,56,"F");
+      pdf.setFillColor(199,166,110);pdf.rect(0,56,W,1.5,"F");
+      pdf.setDrawColor(199,166,110);pdf.circle(27,22,12);
+      write("SSC",27,23.5,14,{bold:true,align:"center"},[231,203,151]);
+      var bname=safe("business")||base.business;
+      write("PAYMENT RECEIPT",52,14,8,{bold:true},[224,198,150]);
+      var bnLines=pdf.splitTextToSize(bname,132);pdf.setFont("helvetica","bold");pdf.setFontSize(16);pdf.setTextColor(255,255,255);pdf.text(bnLines.slice(0,2),52,24);
+      wrap((safe("tagline")||base.tagline),52,36,143,8,[218,227,232]);
+      var addr=(safe("address")||base.address).replace(/\n/g,", ").replace(/₹/g,"INR ");
+      wrap(addr,52,44,143,7.2,[225,234,238]);
+      y=68;write("PAYMENT RECEIPT",left,y,15,{bold:true});write(data.verified?"DETAILS CHECKED":"DRAFT / UNVERIFIED",right,y,8,{bold:true,align:"right"},data.verified?teal:[169,109,26]);y+=8;line(y);y+=10;
+      var pairs=[["Receipt number",safe("receiptNo"),"Receipt date",showDate(data.receiptDate)],["Member name",safe("memberName"),"Group",safe("group")],["Mobile number",safe("mobile"),"BC number",safe("bcNo")],["Member number",safe("memberNo"),"Serial number",safe("serialNo")]];
+      pairs.forEach(function(row){var a=item(row[0],row[1],left,y,82),b=item(row[2],row[3],111,y,78);y=Math.max(a,b)+8});
+      line(y-2);y+=8;write("PAYMENT SUMMARY",left,y,9,{bold:true},teal);y+=7;
+      pdf.setFillColor(246,249,250);pdf.setDrawColor.apply(pdf,border);pdf.roundedRect(left,y,87,29,2,2,"FD");pdf.roundedRect(108,y,87,29,2,2,"FD");
+      write("FINAL BID AMOUNT",left+5,y+9,8,{bold:true},muted);write(moneyText(data.finalBid),left+5,y+20,16,{bold:true});
+      write("TOTAL AMOUNT PAID",113,y+9,8,{bold:true},muted);write(moneyText(data.totalPaid),113,y+20,16,{bold:true});y+=40;
+      write("CHIT & TRANSACTION DETAILS",left,y,9,{bold:true},teal);y+=9;
+      var info=[["M.I.",moneyText(data.monthlyInstallment)],["Bidding amount",moneyText(data.biddingAmount)],["Bidding no.",safe("biddingNo")],["BC gone for",moneyText(data.bcGoneFor)],["Balance amount",moneyText(data.balance)],["Payment mode",safe("paymentMode")],["Payment date",showDate(data.paymentDate)],["Verification",data.verified?"Checked":"Pending"]];
+      for(var i=0;i<info.length;i+=4){var rowY=y,maximum=y;for(var j=0;j<4;j++){var it=info[i+j];if(it){var yy=item(it[0],it[1],left+j*46.5,rowY,42);if(yy>maximum)maximum=yy}}y=maximum+8;line(y-3)}
+      y+=6;write("AMOUNT IN WORDS",left,y,9,{bold:true},teal);y=wrap(currentWords(),left,y+8,177,10)+10;
+      if(safe("notes")){write("PARTICULARS / NOTES",left,y,9,{bold:true},teal);y=wrap(safe("notes"),left,y+8,175,9)+8}
+      var signY=Math.max(y+22,250);if(signY>266){pdf.addPage();signY=60}
+      pdf.setDrawColor(170,187,198);pdf.line(left,signY,90,signY);pdf.line(119,signY,right,signY);
+      write("Member / Candidate Signature",left,signY+6,8,{},muted);write("Organizer Signature",119,signY+6,8,{},muted);
+      var footerY=284;line(footerY);write("Prepared electronically. Valid upon verification and authorization.",left,footerY+6,7,{},muted);
+      var filename=(safe("receiptNo")||safe("memberName")||"payment-receipt").replace(/[^a-z0-9_-]+/gi,"-").replace(/^-|-$/g,"").slice(0,45)||"payment-receipt";
+      pdf.save("Shri-Sai-Chit-Funds-"+filename+".pdf");
+      notify("PDF downloaded");
+    }catch(err){console.error(err);notify("PDF error — opening Print instead");window.print()}
+  }
+  el("downloadPdf").addEventListener("click",makePdf);el("downloadPdfBottom").addEventListener("click",makePdf);
+  fillInputs();render();
+})();
+</script>
+</body>
+</html>
