@@ -193,45 +193,89 @@ html,body{height:auto!important;max-height:none!important;overflow:visible!impor
   el("clearReceipt").addEventListener("click",function(){if(confirm("Clear the current receipt details? This cannot be undone."))cleanReset()});
   el("printReceipt").addEventListener("click",function(){window.print()});
   function makePdf(){
-    if(!window.jspdf || !window.jspdf.jsPDF){notify("Opening Print — choose Save as PDF");window.print();return}
+    if(!window.jspdf || !window.jspdf.jsPDF){notify("Use Print > Save as PDF");window.print();return}
     try{
-      var pdf=new window.jspdf.jsPDF({orientation:"portrait",unit:"mm",format:"a4"}),W=210,left=15,right=195,y=0,navy=[21,44,65],teal=[35,111,115],muted=[100,121,137],border=[219,230,235];
-      function ink(rgb){pdf.setTextColor(rgb[0],rgb[1],rgb[2])}
-      function write(s,x,yy,size,opt,color){ink(color||navy);pdf.setFont("helvetica",opt&&opt.bold?"bold":"normal");pdf.setFontSize(size);pdf.text(String(s||"—"),x,yy,opt&&opt.align?{align:opt.align}:undefined)}
-      function line(ypos){pdf.setDrawColor.apply(pdf,border);pdf.setLineWidth(.35);pdf.line(left,ypos,right,ypos)}
-      function wrap(t,x,yy,w,sz,color){pdf.setFont("helvetica","normal");pdf.setFontSize(sz);ink(color||navy);var lines=pdf.splitTextToSize(String(t||"—").replace(/₹/g,"INR ").replace(/[–—]/g,"-"),w);pdf.text(lines,x,yy);return yy+lines.length*(sz*.42)+1}
-      function item(lbl,val,x,yy,w){write(lbl.toUpperCase(),x,yy,8,{bold:true},muted);return wrap(val||"—",x,yy+7,w,10,navy)}
-      function moneyText(raw){var s=formatted(raw);return s==="—"?"—":s.replace("₹","INR ")}
-      pdf.setFillColor.apply(pdf,navy);pdf.rect(0,0,W,56,"F");
-      pdf.setFillColor(199,166,110);pdf.rect(0,56,W,1.5,"F");
-      pdf.setDrawColor(199,166,110);pdf.circle(27,22,12);
-      write("SSC",27,23.5,14,{bold:true,align:"center"},[231,203,151]);
-      var bname=safe("business")||base.business;
-      write("PAYMENT RECEIPT",52,14,8,{bold:true},[224,198,150]);
-      var bnLines=pdf.splitTextToSize(bname,132);pdf.setFont("helvetica","bold");pdf.setFontSize(16);pdf.setTextColor(255,255,255);pdf.text(bnLines.slice(0,2),52,24);
-      wrap((safe("tagline")||base.tagline),52,36,143,8,[218,227,232]);
-      var addr=(safe("address")||base.address).replace(/\n/g,", ").replace(/₹/g,"INR ");
-      wrap(addr,52,44,143,7.2,[225,234,238]);
-      y=68;write("PAYMENT RECEIPT",left,y,15,{bold:true});write(data.verified?"DETAILS CHECKED":"DRAFT / UNVERIFIED",right,y,8,{bold:true,align:"right"},data.verified?teal:[169,109,26]);y+=8;line(y);y+=10;
-      var pairs=[["Receipt number",safe("receiptNo"),"Receipt date",showDate(data.receiptDate)],["Member name",safe("memberName"),"Group",safe("group")],["Mobile number",safe("mobile"),"BC number",safe("bcNo")],["Member number",safe("memberNo"),"Serial number",safe("serialNo")]];
-      pairs.forEach(function(row){var a=item(row[0],row[1],left,y,82),b=item(row[2],row[3],111,y,78);y=Math.max(a,b)+8});
-      line(y-2);y+=8;write("PAYMENT SUMMARY",left,y,9,{bold:true},teal);y+=7;
-      pdf.setFillColor(246,249,250);pdf.setDrawColor.apply(pdf,border);pdf.roundedRect(left,y,87,29,2,2,"FD");pdf.roundedRect(108,y,87,29,2,2,"FD");
-      write("FINAL BID AMOUNT",left+5,y+9,8,{bold:true},muted);write(moneyText(data.finalBid),left+5,y+20,16,{bold:true});
-      write("TOTAL AMOUNT PAID",113,y+9,8,{bold:true},muted);write(moneyText(data.totalPaid),113,y+20,16,{bold:true});y+=40;
-      write("CHIT & TRANSACTION DETAILS",left,y,9,{bold:true},teal);y+=9;
-      var info=[["M.I.",moneyText(data.monthlyInstallment)],["Bidding amount",moneyText(data.biddingAmount)],["Bidding no.",safe("biddingNo")],["BC gone for",moneyText(data.bcGoneFor)],["Balance amount",moneyText(data.balance)],["Payment mode",safe("paymentMode")],["Payment date",showDate(data.paymentDate)],["Verification",data.verified?"Checked":"Pending"]];
-      for(var i=0;i<info.length;i+=4){var rowY=y,maximum=y;for(var j=0;j<4;j++){var it=info[i+j];if(it){var yy=item(it[0],it[1],left+j*46.5,rowY,42);if(yy>maximum)maximum=yy}}y=maximum+8;line(y-3)}
-      y+=6;write("AMOUNT IN WORDS",left,y,9,{bold:true},teal);y=wrap(currentWords(),left,y+8,177,10)+10;
-      if(safe("notes")){write("PARTICULARS / NOTES",left,y,9,{bold:true},teal);y=wrap(safe("notes"),left,y+8,175,9)+8}
-      var signY=Math.max(y+22,250);if(signY>266){pdf.addPage();signY=60}
-      pdf.setDrawColor(170,187,198);pdf.line(left,signY,90,signY);pdf.line(119,signY,right,signY);
-      write("Member / Candidate Signature",left,signY+6,8,{},muted);write("Organizer Signature",119,signY+6,8,{},muted);
-      var footerY=284;line(footerY);write("Prepared electronically. Valid upon verification and authorization.",left,footerY+6,7,{},muted);
+      var pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4"});
+      var navy=[21,44,65],teal=[35,111,115],muted=[100,121,137];
+      function paint(c){pdf.setTextColor(c[0],c[1],c[2])}
+      function text(t,x,y,size,bold,color,align){
+        paint(color||navy);pdf.setFont("helvetica",bold?"bold":"normal");pdf.setFontSize(size);
+        pdf.text(String(t||"-"),x,y,align?{align:align}:undefined);
+      }
+      function ascii(s){return String(s||"-").replace(/₹/g,"INR ").replace(/[–—]/g,"-").replace(/[^\x20-\x7E\n]/g," ")}
+      function split(s,width,size){pdf.setFont("helvetica","normal");pdf.setFontSize(size);return pdf.splitTextToSize(ascii(s),width)}
+      function field(label,value,x,y,width){
+        text(label.toUpperCase(),x,y,7,true,muted);
+        var lines=split(value||"-",width,9);
+        if(lines.length>2)throw Error(label+" is too long for the one-page receipt. Please shorten it.");
+        lines.forEach(function(line,i){text(line,x,y+6+i*4.2,9)});
+      }
+      function money(v){var m=formatted(v);return m==="—"?"-":m.replace("₹","INR ")}
+      // All receipt sections use fixed positions on one A4 sheet.
+      pdf.setFillColor(21,44,65);pdf.rect(0,0,210,47,"F");
+      pdf.setFillColor(199,166,110);pdf.rect(0,47,210,1,"F");
+      pdf.setDrawColor(199,166,110);pdf.circle(27,21,11);
+      text("SSC",27,23,13,true,[233,207,151],"center");
+      text("PAYMENT ACKNOWLEDGMENT",47,11,7.5,true,[225,197,142]);
+      var business=split(safe("business")||base.business,143,15);
+      if(business.length>2)throw Error("Business name is too long for one page.");
+      business.forEach(function(s,i){text(s,47,21+i*6.5,15,true,[255,255,255])});
+      var tagline=split(safe("tagline"),142,7.3);
+      if(tagline.length>2)throw Error("Tagline is too long for one page.");
+      tagline.forEach(function(s,i){text(s,47,34+i*3.2,7.3,false,[220,231,238])});
+      var address=split(safe("address").replace(/\n/g,", "),142,7.4);
+      if(address.length>2)throw Error("Business address is too long for the one-page header.");
+      address.forEach(function(s,i){text(s,47,40+i*3.1,7.4,false,[231,239,244])});
+      text("PAYMENT RECEIPT",15,60,14,true);
+      text(data.verified?"DETAILS CHECKED":"DRAFT / UNVERIFIED",195,59.5,7.7,true,data.verified?teal:[166,111,39],"right");
+      pdf.setDrawColor(217,228,234);pdf.line(15,64,195,64);
+      var pairs=[
+        ["Receipt number",safe("receiptNo"),"Receipt date",showDate(data.receiptDate)],
+        ["Member name",safe("memberName"),"Group",safe("group")],
+        ["Mobile number",safe("mobile"),"BC number",safe("bcNo")],
+        ["Member number",safe("memberNo"),"Serial number",safe("serialNo")]
+      ];
+      pairs.forEach(function(row,i){var y=72+i*13.5;field(row[0],row[1],15,y,84);field(row[2],row[3],111,y,81)});
+      pdf.line(15,124,195,124);
+      text("PAYMENT SUMMARY",15,132,9,true,teal);
+      pdf.setDrawColor(216,227,232);pdf.setFillColor(247,250,251);
+      pdf.roundedRect(15,137,87,26,2,2,"FD");pdf.roundedRect(108,137,87,26,2,2,"FD");
+      text("FINAL BID AMOUNT",20,146,7.5,true,muted);
+      text(money(data.finalBid),20,157,14,true);
+      text("TOTAL AMOUNT PAID",113,146,7.5,true,muted);
+      text(money(data.totalPaid),113,157,14,true);
+      text("CHIT & TRANSACTION DETAILS",15,174,9,true,teal);
+      var other=[
+        ["M.I.",money(data.monthlyInstallment)],
+        ["Bidding amount",money(data.biddingAmount)],
+        ["Bidding number",safe("biddingNo")],
+        ["BC gone for",money(data.bcGoneFor)],
+        ["Balance amount",money(data.balance)],
+        ["Payment mode",safe("paymentMode")],
+        ["Payment date",showDate(data.paymentDate)],
+        ["Verification",data.verified?"Checked":"Pending"]
+      ];
+      other.forEach(function(item,i){field(item[0],item[1],15+(i%4)*46,182+Math.floor(i/4)*18.5,42)});
+      pdf.line(15,215,195,215);
+      text("AMOUNT IN WORDS",15,224,9,true,teal);
+      var words=split(currentWords(),177,9);
+      if(words.length>3)throw Error("Amount in words is too long for the one-page receipt.");
+      words.forEach(function(line,i){text(line,15,233+i*4.8,9)});
+      if(safe("notes")){
+        text("PARTICULARS / NOTES",15,251,8,true,teal);
+        var notes=split(safe("notes"),179,8);
+        if(notes.length>3)throw Error("Notes are too long. Shorten them to keep the PDF on one page.");
+        notes.forEach(function(line,i){text(line,15,258+i*3.7,8)});
+      }
+      pdf.setDrawColor(164,182,192);pdf.line(15,277,91,277);pdf.line(119,277,195,277);
+      text("Member / Candidate Signature",15,282,8,false,muted);
+      text("Organizer Signature",119,282,8,false,muted);
+      pdf.setDrawColor(219,230,235);pdf.line(15,289,195,289);
+      text("Prepared electronically - valid upon verification and authorization.",15,294,7,false,muted);
       var filename=(safe("receiptNo")||safe("memberName")||"payment-receipt").replace(/[^a-z0-9_-]+/gi,"-").replace(/^-|-$/g,"").slice(0,45)||"payment-receipt";
       pdf.save("Shri-Sai-Chit-Funds-"+filename+".pdf");
-      notify("PDF downloaded");
-    }catch(err){console.error(err);notify("PDF error — opening Print instead");window.print()}
+      notify("One-page A4 PDF downloaded");
+    }catch(err){console.error(err);alert(err&&err.message?err.message:"PDF could not be created; use Print instead.")}
   }
   el("downloadPdf").addEventListener("click",makePdf);el("downloadPdfBottom").addEventListener("click",makePdf);
 
